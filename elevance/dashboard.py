@@ -85,19 +85,20 @@ df_merged["Sentiment_Subjectivity"] = df_merged[
 ist_tz = pytz.timezone("Asia/Kolkata")
 
 
+
+# Define IST timezone
+ist_tz = pytz.timezone("Asia/Kolkata")
+
 def current_ist_time():
-  return datetime.datetime.now(ist_tz).time()
-
-
-from datetime import datetime, time
-
+    return datetime.datetime.now(ist_tz).time()
 
 def is_within_time(start_hour, start_min, end_hour, end_min):
     now_t = current_ist_time()
-    start_t = time(start_hour, start_min)
-    end_t = time(end_hour, end_min)
+    start_t = datetime.time(start_hour, start_min)
+    end_t = datetime.time(end_hour, end_min)
 
     return start_t <= now_t <= end_t
+
 
 
 
