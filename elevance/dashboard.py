@@ -9,6 +9,8 @@ import plotly.io as pio
 import webbrowser
 from pathlib import Path
 
+import streamlit as st
+
 
 # Store all charts that are active during the current time window.
 active_figures = []
@@ -443,40 +445,14 @@ else:
 # ==========================================
 # DISPLAY ALL ACTIVE CHARTS IN ONE BROWSER TAB
 # ==========================================
+# Display charts directly in Streamlit
+st.title("Play Store Analytics Dashboard")
+
 if active_figures:
-    chart_sections = []
-    for index, fig in enumerate(active_figures):
-        chart_sections.append(
-            pio.to_html(
-                fig,
-                full_html=False,
-                include_plotlyjs="cdn" if index == 0 else False,
-                config={"responsive": True},
-            )
-        )
-
-    dashboard_html = """<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Play Store Analytics Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f7fa; }
-        h1 { text-align: center; }
-        .chart { background: white; padding: 12px; margin: 0 auto 22px; max-width: 1400px; border-radius: 10px; }
-    </style>
-</head>
-<body>
-    <h1>Play Store Analytics Dashboard</h1>
-    """ + "".join(f'<section class="chart">{chart}</section>' for chart in chart_sections) + """
-</body>
-</html>
-"""
-
-    dashboard_path = Path("play_store_dashboard.html").resolve()
-    dashboard_path.write_text(dashboard_html, encoding="utf-8")
-    print(f"\nDashboard created: {dashboard_path}")
-    webbrowser.open(dashboard_path.as_uri())
+    for fig in active_figures:
+        st.plotly_chart(fig, use_container_width=True)
 else:
-    print("\nNo charts are active at the current time, so no dashboard was opened.")
+    st.warning(
+        "No charts are active at the current time. "
+        "Please check back during a chart's scheduled time window."
+    )
