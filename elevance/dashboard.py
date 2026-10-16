@@ -9,6 +9,7 @@ import plotly.io as pio
 import webbrowser
 from pathlib import Path
 
+
 # Store all charts that are active during the current time window.
 active_figures = []
 import pytz
