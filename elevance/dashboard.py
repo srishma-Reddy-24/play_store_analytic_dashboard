@@ -91,12 +91,14 @@ def current_ist_time():
 
 from datetime import datetime, time
 
+
 def is_within_time(start_hour, start_min, end_hour, end_min):
-    now_t = datetime.now().time()
+    now_t = current_ist_time()
     start_t = time(start_hour, start_min)
     end_t = time(end_hour, end_min)
 
     return start_t <= now_t <= end_t
+
 
 
 print("Data successfully loaded and preprocessed!")
